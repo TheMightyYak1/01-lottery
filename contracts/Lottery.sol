@@ -12,7 +12,7 @@ contract Lottery is Ownable {
     event BetReceived(address _punter, uint256 _amount, uint256 _percentBet);
 
     // emits the winner of each round
-    event RoundWinner (address _winner, uint256 _amountWon);
+    event RoundWinner (address _winner, uint256 _amountWon, uint256 _lotteryNo);
 
     event LimitChange (uint256 _newLimit);
 
@@ -36,11 +36,13 @@ contract Lottery is Ownable {
 
     // lotteryNo => bets 
     mapping(uint256 => Bet[]) public bookKeeper; //store bets
-    // could maybe get rid of the mapping storage and just wipe after each lottery
+    // could maybe get rid of the mapping storage and just clear after each lottery
+    // to reduce on-chain storage
 
     // owner sets limit of Lot main
     constructor(uint256 _initialLimit) {
         main.limit = _initialLimit;
+        address owner = msg.sender;
     }
 
     // maximum wager 50% of pool size
@@ -53,12 +55,13 @@ contract Lottery is Ownable {
     // if it is, execute _lottery
     // last punter cops the big gas fee
 
-    function lottery () public payable {
+    function lotteryBet () public payable {
         // checks
         uint256 _bet = msg.value;
         require(msg.sender != address(0), "Betting from the zero address");
         require( _bet <= (main.limit.div(2)), "Bet too much");
         require( _bet >= (main.limit.div(20)), "Insufficient bet");
+        require(main.amount < main.limit, "Last lottery completing");
 
         // effects
 
@@ -85,7 +88,8 @@ contract Lottery is Ownable {
             // dont really need to protect against reentrancy as the whole contract is sent
             // not sure what to do with bool success
             (bool success, ) = _winnerAdd.call{value: address(this).balance}("");
-            emit RoundWinner(_winnerAdd, main.amount);
+            emit RoundWinner(_winnerAdd, main.amount, lotteryNo);
+            console.log('Punter %s won %s Eth!', _winnerAdd, main.amount);
             main.amount = 0;
             main.percentFilled = 0;
             lotteryNo ++;
@@ -137,11 +141,11 @@ contract Lottery is Ownable {
         return main.amount;
     }
 
-    function getLotRemaining () public view returns (uint256){
-        return ( main.limit - main.amount );
+    function getLimit () public view returns (uint256){
+        return main.limit;
     }
 
-    function getPoolWagers () public view returns (Bet[] memory){
+    function getPunters () public view returns (Bet[] memory){
         return bookKeeper[lotteryNo];
     }
 
