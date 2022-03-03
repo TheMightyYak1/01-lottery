@@ -30,7 +30,7 @@ async function main() {
         abi: JSON.parse(lottery.interface.format('json'))
     };
 
-    fs.writeFileSync('frontend/src/Lottery.json', JSON.stringify(data));
+    fs.writeFileSync('lottery-frontend/src/Lottery.json', JSON.stringify(data));
 }
 
 // We recommend this pattern to be able to use async/await everywhere
