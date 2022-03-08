@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 contract Lottery is Ownable {
 
     using SafeMath for uint256;
-
+    address _owner;
     // emit when a bet has been made
     event BetReceived(address _punter, uint256 _amount, uint256 _percentBet);
 
@@ -42,7 +42,7 @@ contract Lottery is Ownable {
     // owner sets limit of Lot main
     constructor(uint256 _initialLimit) {
         main.limit = _initialLimit;
-        address owner = msg.sender;
+        _owner = msg.sender;
     }
 
     // maximum wager 50% of pool size
@@ -147,6 +147,10 @@ contract Lottery is Ownable {
 
     function getPunters () public view returns (Bet[] memory){
         return bookKeeper[lotteryNo];
+    }
+
+    function getOwner () public view returns (address){
+        return _owner;
     }
 
     // onlyOwner functions

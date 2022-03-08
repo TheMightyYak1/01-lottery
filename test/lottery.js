@@ -71,5 +71,12 @@ describe("Lottery", () => {
             const lotBalance = await lottery.getLotBalance();
             expect(lotBalance).to.equal(0);
         });
+
+        it('Should store the correct owner address', async () => {
+            const ownerAddress = await lottery.getOwner();
+            console.log(owner.address);
+            console.log(ownerAddress);
+            expect(ownerAddress).to.equal(owner.address);
+        });
     });
 });
