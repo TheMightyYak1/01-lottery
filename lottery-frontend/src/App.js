@@ -27,10 +27,11 @@ function App() {
   const [getLimit, setGetLimit] = useState(undefined);
   const [showOwner, setShowOwner] = useState(false);
   const [getPunters, setGetPunters] = useState([]);
+
   //const [bet, setBet] = useState(undefined);
 
-  const componentDidMount = async() => {
-
+  async function _betTable(lottery) {
+    const getPunters = await lottery.getPunters();
     const numBets = getPunters.length
     let betTable = [];
     for (let i = 0; i < numBets; i++){
@@ -38,41 +39,28 @@ function App() {
         key: i,
         betNo: i,
         punter: getPunters[i].punter,
-        amount: getPunters[i].amount,
+        amount: getPunters[i].amount.toNumber(),
       });
     }
+    console.log(betTable);
     setGetPunters(betTable);
-  }
-
-  const componentDidUpdate = async(prevProps, prevState) => {
-
-
   }
 
   useEffect(() => {
     const init = async() => {
       const { lottery } = await getBlockchain();
       const getLimit = await lottery.getLimit();
-      const getPunters = await lottery.getPunters();
       // lottery contract is the lottery object
       // getLimit method is an object.
       setLottery(lottery);
       setGetLimit(getLimit);
       // betList table variables
-      const numBets = getPunters.length
-      let betTable = [];
-      for (let i = 0; i < numBets; i++){
-        betTable.push({
-          key: i,
-          betNo: i,
-          punter: getPunters[i].punter,
-          amount: getPunters[i].amount.toNumber(),
-        });
-      }
-      setGetPunters(betTable);
+      _betTable(lottery);
+
     };
     init();
   }, []);
+
 
   if(
     typeof lottery === 'undefined'
@@ -81,8 +69,15 @@ function App() {
     return 'Loading...';
   };
 
-  const handleOwner = () => {
-
+  // only owner can call
+  const handleOwner = (currentShowOwner) => {
+    let newShowOwner;
+    if (currentShowOwner === true){
+      newShowOwner = false;
+    } else {
+      newShowOwner = true;
+    }
+    setShowOwner(newShowOwner);
   }
 
 

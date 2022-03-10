@@ -1,11 +1,13 @@
 import { BigNumber } from 'ethers';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 
 
 
 export default function Bet(props) {
+
+
 
     async function handleBet(e, val) {
         e.preventDefault();
@@ -15,7 +17,14 @@ export default function Bet(props) {
         const lotteryBet = await props.lottery.lotteryBet({value: val});
         await lotteryBet.wait();
         document.getElementById('input-bet').value = '';
+
+        //TEMPORARY SOLUTION DON'T WANT WHOLE PAGE TO RELOAD
+        window.location.reload();
     }
+
+    useEffect(()=> {
+        
+    });
 
   return (
     <div>
