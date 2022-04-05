@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import styled from 'styled-components';
 
 const Div = styled.div`
@@ -31,7 +31,7 @@ export default function Owner(props) {
     e.preventDefault();
     const ownerAddress = await props.lottery.getOwner();
     const signerAddress = await props.lottery.signer.getAddress()
-    if (ownerAddress == signerAddress){
+    if (ownerAddress === signerAddress){
       handleOwner(showOwner);
     } else {
       console.log('Not contract Owner');

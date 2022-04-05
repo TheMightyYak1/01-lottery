@@ -1,4 +1,4 @@
-import { ethers, Contract } from 'ethers';
+import { ethers } from 'ethers';
 import Lottery from './Lottery.json';
 
 //import detectEthereumProvider from '@metamask/detect-provider';
@@ -8,7 +8,8 @@ const getBlockchain = () =>
         window.addEventListener('load', async () => {
             
             if(window.ethereum) {
-                const [account] = await window.ethereum.request({method:'eth_requestAccounts'});
+                //const [account] =
+                await window.ethereum.request({method:'eth_requestAccounts'});
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();     
                 const lottery = new ethers.Contract (
