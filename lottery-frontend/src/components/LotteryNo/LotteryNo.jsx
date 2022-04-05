@@ -9,14 +9,13 @@ const Div = styled.div`
 `;
 
 export default function LotteryNo(props) {
+
   return (
     <div>
       <Div>
         <p>Lottery Limit: </p>
         <p> {props.getLimit.toString()}</p>
-
       </Div>
-
 
     </div>
 

@@ -25,10 +25,7 @@ function App() {
   
   const [lottery, setLottery] = useState(undefined);
   const [getLimit, setGetLimit] = useState(undefined);
-  const [showOwner, setShowOwner] = useState(false);
   const [getPunters, setGetPunters] = useState([]);
-
-  //const [bet, setBet] = useState(undefined);
 
   async function _betTable(lottery) {
     const getPunters = await lottery.getPunters();
@@ -45,7 +42,7 @@ function App() {
     console.log(betTable);
     setGetPunters(betTable);
   }
-
+  // componentDidMount
   useEffect(() => {
     const init = async() => {
       const { lottery } = await getBlockchain();
@@ -69,25 +66,14 @@ function App() {
     return 'Loading...';
   };
 
-  // only owner can call
-  const handleOwner = (currentShowOwner) => {
-    let newShowOwner;
-    if (currentShowOwner === true){
-      newShowOwner = false;
-    } else {
-      newShowOwner = true;
-    }
-    setShowOwner(newShowOwner);
-  }
-
-
   return (
     <Div>
       <AppHeader />
       <Instructions />
       <LotteryNo
         lottery={lottery}
-        getLimit={getLimit} />
+        getLimit={getLimit}
+        />
       < Bet
         lottery={lottery}
       />
@@ -97,8 +83,10 @@ function App() {
           getPunters={getPunters}/>
         <Owner
           lottery={lottery}
-          showOwner={showOwner}
-          handleOwner={handleOwner}/>
+          
+          //showOwner={showOwner}
+          //handleOwner={handleOwner}
+          />
       </Div1>
     </Div>
   );
