@@ -17,7 +17,7 @@ const getBlockchain = () =>
                     signer
                 );
                 console.log(Lottery.address);
-                resolve({ lottery});
+                resolve({ lottery });
                 return;
             };
             resolve({signerAddress: undefined, lottery: undefined});

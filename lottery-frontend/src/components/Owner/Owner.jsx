@@ -30,10 +30,12 @@ export default function Owner(props) {
   const handleOwnerView = async (e) => {
     e.preventDefault();
     const ownerAddress = await props.lottery.getOwner();
-
-    // *** check that ownerAddress is Signer?? ***
-
-    handleOwner(showOwner);
+    const signerAddress = await props.lottery.signer.getAddress()
+    if (ownerAddress == signerAddress){
+      handleOwner(showOwner);
+    } else {
+      console.log('Not contract Owner');
+    }
   }
 
   const useHandleUpdate = async (e) => {
