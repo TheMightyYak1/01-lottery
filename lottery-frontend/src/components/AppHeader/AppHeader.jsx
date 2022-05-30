@@ -24,7 +24,7 @@ export default function AppHeader(props){
         <div>
             <Header>
                 <h1>
-                    Lottery!
+                    Eth Lottery! 
                 </h1>
                 <Img src={logo} alt='logo' />
             </Header>

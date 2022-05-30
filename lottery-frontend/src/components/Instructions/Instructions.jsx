@@ -21,7 +21,14 @@ export default function Instructions(props) {
     <div>
         <Div>
             <Div1>Instructions: </Div1>
-            <Div2>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta, maxime.</Div2>
+            <Div2>
+              <ol>
+                <li>Connect to the Rinkeby Test Network - with a wallet holding test ETH.</li>
+                <li>Place a bet in wei - bet sizing between 5% and 50% of limit.</li>
+                <li>Refresh the page, confirming your bet!</li>
+                <li>Wait for the limit to be reached!</li>
+              </ol>
+            </Div2>
         </Div>
     </div>
   )
